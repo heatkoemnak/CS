@@ -4,65 +4,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lesson07Example
+namespace Lesson08Example
 {
-    class School    //base class
+    class PetShop
     {
-        public string strSchoolName;
+        private string strPetShopName;
         private string strAddress;
         public string Address
         {
             get { return strAddress; }
             set { strAddress = value; }
         }
-        public School(string strSchoolName, string strAddress)
+        public PetShop(string strPetShopName, string strAddress)
         {
-            this.strSchoolName = strSchoolName;
+            this.strPetShopName = strPetShopName;
             this.strAddress = strAddress;
         }
-    }
-    class Student : School
-    {
-        public string strStudentName;
-        private float fltSchoolFees;
-        public float SchoolFees
+        public string PetShopInfo()
         {
-            get { return fltSchoolFees; }
-            set
-            {
-                if (value > 0.0f)
-                    fltSchoolFees = value;
-            }
+            return ("Pet Shop Name: " +
+                  strPetShopName + "Address: " + strAddress);
         }
-        public Student(string strStudentName,
-                       float fltSchoolFees,
-                       string strSchoolName,
-                       string strAddress) : base(strSchoolName, strAddress)
+        public virtual string Sound()
         {
-            this.strStudentName = strStudentName;
-            SchoolFees = fltSchoolFees;
+            return ("The animal makes a sound");
+        }
+    }
+    class Dog : PetShop
+    {
+        private string strName;
+        public string Name
+        {
+            get { return strName; }
+            set { strName = value; }
+        }
+        public Dog(string strPetShopName, string strAddress,
+                string strName) : base(strPetShopName, strAddress)
+        {
+            this.strName = strName;
+            //this.strPetShopName = strPetShopName; cannot do this
+        }
+        public override string Sound()
+        {
+            return ("My dog barks");
+        }
+    }
+    class Cat : PetShop
+    {
+        private string strName;
+
+        public Cat(string strPetShopName, string strAddress,
+              string strName) : base(strPetShopName, strAddress)
+        {
+            this.strName = strName;
+            //this.strPetShopName = strPetShopName; cannot do this
+        }
+        public override string Sound()
+        {
+            return ("My cat meow");
         }
     }
     internal class Program
     {
         static void Main(string[] args)
         {
-            Student objS1;
-            Console.Write("Enter the school: ");
-            string mySchool = Console.ReadLine();
+            Console.Write("Enter the name of the dog: ");
+            string MyBestPet = Console.ReadLine();
+            Console.Write("Enter the name of the pet shop: ");
+            string ILovePet = Console.ReadLine();
             Console.Write("Enter the address: ");
-            string myAddress = Console.ReadLine();
-            Console.Write("Enter the name of the student: ");
-            string myName = Console.ReadLine();
-            Console.Write("Enter the school fee: ");
-            float mySchoolFees = float.Parse(Console.ReadLine());
+            string PetShopAddres = Console.ReadLine();
 
-            objS1 = new Student(myName, mySchoolFees, mySchool, myAddress);
 
-            Console.WriteLine("School name: {0}", objS1.strSchoolName);
-            Console.WriteLine("Address: {0}", objS1.Address);
-            Console.WriteLine("Student Name: {0}", objS1.strStudentName);
-            Console.WriteLine("School Fees: {0}", objS1.SchoolFees);
+            Dog objDog = new Dog(ILovePet, PetShopAddres, MyBestPet);
+            Console.WriteLine("Pet Shope Name: {0}, Address: {1}", objDog.Name,
+             objDog.Address);
+            Console.WriteLine("The animal makes a sound {0}", objDog.Sound());
         }
     }
 }
